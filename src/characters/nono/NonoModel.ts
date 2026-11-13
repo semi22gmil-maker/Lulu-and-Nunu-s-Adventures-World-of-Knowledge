@@ -384,6 +384,9 @@ export function buildNonoModel(): BuiltCharacterModel {
     rig,
     dispose: () => {
       disposableGeometries.forEach((g) => g.dispose());
+      leftEye.dispose();
+      rightEye.dispose();
+      mouth.dispose();
       brownFurTex.dispose();
       creamFurTex.dispose();
       brownFurMat.dispose();

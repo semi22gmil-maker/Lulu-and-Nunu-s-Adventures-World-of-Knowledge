@@ -83,6 +83,12 @@ export const CharacterLab: React.FC = () => {
 
   const handleTestLipSync = (speaker: CharacterId) => {
     audioManager.playSfx('tap');
+    if (
+      (viewMode === 'lulu' && speaker === CharacterId.Nono) ||
+      (viewMode === 'nono' && speaker === CharacterId.Lulu)
+    ) {
+      setViewMode('both');
+    }
     const clipId = speaker === CharacterId.Lulu ? 'lulu_welcome_01' : 'nono_encourage_01';
     audioManager.playVoiceClip(clipId);
     stageRef.current?.triggerLipSyncTest(speaker, 2.6);

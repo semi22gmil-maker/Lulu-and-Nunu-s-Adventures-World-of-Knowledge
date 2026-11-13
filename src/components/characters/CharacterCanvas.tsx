@@ -86,6 +86,8 @@ function computeCameraPresetTargets(
   };
 }
 
+let webglMountCount = 0;
+
 export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterCanvasProps>(
   ({ viewMode, lightingPreset, qualityTier, onTelemetry }, ref) => {
     const mountRef = useRef<HTMLDivElement | null>(null);
@@ -96,6 +98,7 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
     viewModeRef.current = viewMode;
     const onTelemetryRef = useRef(onTelemetry);
     onTelemetryRef.current = onTelemetry;
+    const skipInteractionClearRef = useRef(false);
 
     const sceneObjectsRef = useRef<{
       scene: THREE.Scene;
@@ -172,6 +175,7 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
       runInteraction: (id, onLabel) => {
         const ctx = sceneObjectsRef.current;
         if (!ctx) return;
+        skipInteractionClearRef.current = true;
         ctx.lulu.getObject3D().visible = true;
         ctx.nono.getObject3D().visible = true;
         ctx.lulu.setPlacement(-0.62, 0, 0.14, false);
@@ -244,12 +248,18 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
 
       container.innerHTML = '';
       container.appendChild(renderer.domElement);
+      webglMountCount += 1;
+      renderer.domElement.dataset.mounts = String(webglMountCount);
+      renderer.domElement.dataset.webglMode = profile.fallbackMode;
 
+      let isContextLost = false;
       const handleContextLost = (e: Event) => {
         e.preventDefault();
+        isContextLost = true;
         setContextLost(true);
       };
       const handleContextRestored = () => {
+        isContextLost = false;
         setContextLost(false);
       };
       renderer.domElement.addEventListener('webglcontextlost', handleContextLost);
@@ -361,6 +371,9 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
       }
 
       const pushTelemetryFn = () => {
+        renderer.domElement.dataset.geometries = String(renderer.info.memory.geometries);
+        renderer.domElement.dataset.textures = String(renderer.info.memory.textures);
+        renderer.domElement.dataset.triangles = String(renderer.info.render.triangles);
         onTelemetryRef.current?.({
           loaded: true,
           webglMode: profile.fallbackMode,
@@ -408,12 +421,13 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
       });
 
       const handleResize = () => {
-        if (!container) return;
+        if (!container || disposed || isContextLost) return;
         const w = Math.max(300, container.clientWidth);
         const h = Math.max(320, container.clientHeight);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h, false);
+        renderer.render(scene, camera);
       };
       window.addEventListener('resize', handleResize);
       const resizeObserver =
@@ -458,27 +472,30 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
         }
 
         const now = performance.now();
-        const dt = Math.min((now - lastTime) / 1000, 0.08);
+        const rawDt = Math.max(0.001, (now - lastTime) / 1000);
+        const dt = Math.min(rawDt, 0.08);
         lastTime = now;
 
-        if (sceneCtx.cameraTransitionActive) {
-          camera.position.lerp(_camTargetPos, 1 - Math.exp(-7 * dt));
-          controls.target.lerp(_camTargetLook, 1 - Math.exp(-7 * dt));
-          if (camera.position.distanceTo(_camTargetPos) < 0.015) {
-            camera.position.copy(_camTargetPos);
-            controls.target.copy(_camTargetLook);
-            sceneCtx.cameraTransitionActive = false;
+        if (!isContextLost) {
+          if (sceneCtx.cameraTransitionActive) {
+            camera.position.lerp(_camTargetPos, 1 - Math.exp(-7 * dt));
+            controls.target.lerp(_camTargetLook, 1 - Math.exp(-7 * dt));
+            if (camera.position.distanceTo(_camTargetPos) < 0.015) {
+              camera.position.copy(_camTargetPos);
+              controls.target.copy(_camTargetLook);
+              sceneCtx.cameraTransitionActive = false;
+            }
           }
+
+          controls.update();
+          lulu.update(dt);
+          nono.update(dt);
+          renderer.render(scene, camera);
         }
 
-        controls.update();
-        lulu.update(dt);
-        nono.update(dt);
-        renderer.render(scene, camera);
-
-        fpsAccum += dt;
+        fpsAccum += rawDt;
         fpsFrames += 1;
-        telemetryTimer += dt;
+        telemetryTimer += rawDt;
         if (telemetryTimer >= 0.3) {
           currentFps = fpsAccum > 0 ? Math.round(fpsFrames / fpsAccum) : 60;
           fpsAccum = 0;
@@ -518,7 +535,11 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
     useEffect(() => {
       const ctx = sceneObjectsRef.current;
       if (!ctx) return;
-      ctx.interactions.clearPending();
+      if (skipInteractionClearRef.current) {
+        skipInteractionClearRef.current = false;
+      } else {
+        ctx.interactions.clearPending();
+      }
       applyPlacementForMode(viewMode, ctx.lulu, ctx.nono, false);
       const targets = computeCameraPresetTargets('threeQuarter', viewMode);
       _camTargetPos.copy(targets.pos);

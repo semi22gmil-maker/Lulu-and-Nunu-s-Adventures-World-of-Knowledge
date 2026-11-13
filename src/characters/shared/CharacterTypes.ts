@@ -37,6 +37,7 @@ export interface CharacterEyeRig {
   upperLid: THREE.Mesh;
   lowerLid: THREE.Mesh;
   happyArc: THREE.Mesh;
+  dispose: () => void;
 }
 
 export interface CharacterMouthRig {
@@ -47,6 +48,7 @@ export interface CharacterMouthRig {
   tongue: THREE.Mesh;
   smileCurve: THREE.Mesh;
   sadCurve: THREE.Mesh;
+  dispose: () => void;
 }
 
 export interface CharacterSkeletonRig {

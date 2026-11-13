@@ -19,7 +19,9 @@ export function createCharacterStudioLighting(
 ): CharacterStudioRig {
   // Mandatory procedural environment reflection for shiny eyes and gold explorer pins
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
-  const envRT = pmremGenerator.fromScene(new RoomEnvironment(), 0.04);
+  const roomEnv = new RoomEnvironment();
+  const envRT = pmremGenerator.fromScene(roomEnv, 0.04);
+  roomEnv.dispose();
   scene.environment = envRT.texture;
   pmremGenerator.dispose();
 
@@ -108,6 +110,7 @@ export function createCharacterStudioLighting(
       if (targetScene) {
         targetScene.environment = null;
       }
+      keyLight.shadow.map?.dispose();
       envRT.dispose();
     },
   };

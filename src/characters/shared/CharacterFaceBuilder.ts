@@ -74,6 +74,17 @@ export function createCharacterEye(
   happyArc.visible = false;
   group.add(happyArc);
 
+  const eyeGeometries: THREE.BufferGeometry[] = [
+    scleraGeo,
+    irisGeo,
+    pupilGeo,
+    mainLightGeo,
+    subLightGeo,
+    lidGeo,
+    lowerLidGeo,
+    happyGeo,
+  ];
+
   return {
     group,
     sclera,
@@ -84,6 +95,9 @@ export function createCharacterEye(
     upperLid,
     lowerLid,
     happyArc,
+    dispose: () => {
+      eyeGeometries.forEach((g) => g.dispose());
+    },
   };
 }
 
@@ -135,6 +149,15 @@ export function createCharacterMouth(
   sadCurve.visible = false;
   group.add(sadCurve);
 
+  const mouthGeometries: THREE.BufferGeometry[] = [
+    upperLipGeo,
+    lowerJawGeo,
+    cavityGeo,
+    tongueGeo,
+    smileGeo,
+    sadGeo,
+  ];
+
   return {
     group,
     upperLip,
@@ -143,6 +166,9 @@ export function createCharacterMouth(
     tongue,
     smileCurve,
     sadCurve,
+    dispose: () => {
+      mouthGeometries.forEach((g) => g.dispose());
+    },
   };
 }
 

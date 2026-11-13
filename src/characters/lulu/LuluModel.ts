@@ -381,6 +381,9 @@ export function buildLuluModel(): BuiltCharacterModel {
     rig,
     dispose: () => {
       disposableGeometries.forEach((g) => g.dispose());
+      leftEye.dispose();
+      rightEye.dispose();
+      mouth.dispose();
       furTexture.dispose();
       muzzleTexture.dispose();
       blackFurMat.dispose();
