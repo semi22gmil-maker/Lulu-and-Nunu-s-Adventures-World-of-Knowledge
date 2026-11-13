@@ -75,10 +75,12 @@ export class CharacterController {
   }
 
   update(dt: number): void {
-    const safeDt = Math.min(dt, 0.05);
-    this.rig.root.position.x = THREE.MathUtils.damp(this.rig.root.position.x, this.targetPosX, 10, safeDt);
-    this.rig.root.position.z = THREE.MathUtils.damp(this.rig.root.position.z, this.targetPosZ, 10, safeDt);
-    this.rig.root.rotation.y = THREE.MathUtils.damp(this.rig.root.rotation.y, this.targetYaw, 10, safeDt);
+    const safeDt = Math.min(dt, 0.08);
+    if (!this.animations.isPaused()) {
+      this.rig.root.position.x = THREE.MathUtils.damp(this.rig.root.position.x, this.targetPosX, 10, safeDt);
+      this.rig.root.position.z = THREE.MathUtils.damp(this.rig.root.position.z, this.targetPosZ, 10, safeDt);
+      this.rig.root.rotation.y = THREE.MathUtils.damp(this.rig.root.rotation.y, this.targetYaw, 10, safeDt);
+    }
     this.animations.update(safeDt);
   }
 

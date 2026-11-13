@@ -133,6 +133,7 @@ export class CharacterExpressionManager {
   private speechMouthAmplitude = 0;
   private speechEnvelopeTimer = 0;
   private manualMouthOpen = false;
+  private pausedNeedsApply = false;
   private gazeOffsetX = 0;
   private gazeOffsetY = 0;
 
@@ -155,6 +156,7 @@ export class CharacterExpressionManager {
 
   setExpression(expression: FacialExpression): void {
     this.activeExpression = expression;
+    this.pausedNeedsApply = true;
   }
 
   getExpression(): FacialExpression {
@@ -164,6 +166,7 @@ export class CharacterExpressionManager {
   triggerBlink(): void {
     this.isBlinking = true;
     this.blinkElapsed = 0;
+    this.pausedNeedsApply = true;
   }
 
   /**
@@ -179,6 +182,7 @@ export class CharacterExpressionManager {
 
   setManualMouthOpen(open: boolean): void {
     this.manualMouthOpen = open;
+    this.pausedNeedsApply = true;
   }
 
   isManualMouthOpen(): boolean {
@@ -189,6 +193,7 @@ export class CharacterExpressionManager {
     this.speechMouthAmplitude = 0;
     this.speechEnvelopeTimer = 0;
     this.manualMouthOpen = false;
+    this.pausedNeedsApply = true;
   }
 
   setGazeTarget(x: number, y: number): void {
@@ -196,25 +201,32 @@ export class CharacterExpressionManager {
     this.gazeOffsetY = THREE.MathUtils.clamp(y, -0.015, 0.018);
   }
 
-  update(dt: number, elapsed: number): void {
-    const safeDt = Math.min(dt, 0.05);
+  update(dt: number, elapsed: number, isPaused = false): void {
+    if (isPaused) {
+      if (!this.pausedNeedsApply) return;
+      this.pausedNeedsApply = false;
+    }
+
+    const safeDt = Math.min(dt, 0.08);
     const baseTarget = EXPRESSION_PRESETS[this.activeExpression];
     const override = this.customOverrides[this.activeExpression];
     const target: ExpressionTargetState = override ? { ...baseTarget, ...override } : baseTarget;
 
-    // Natural automatic blink loop
-    this.blinkElapsed += safeDt;
-    if (!this.isBlinking && this.blinkElapsed >= this.nextBlinkDelay) {
-      this.isBlinking = true;
-      this.blinkElapsed = 0;
-      this.nextBlinkDelay = 2.6 + ((Math.sin(elapsed * 7.3) + 1) * 0.9);
+    // Natural automatic blink loop (only advance when unpaused)
+    if (!isPaused) {
+      this.blinkElapsed += safeDt;
+      if (!this.isBlinking && this.blinkElapsed >= this.nextBlinkDelay) {
+        this.isBlinking = true;
+        this.blinkElapsed = 0;
+        this.nextBlinkDelay = 2.6 + ((Math.sin(elapsed * 7.3) + 1) * 0.9);
+      }
     }
 
     let blinkFactor = 0;
     if (this.isBlinking) {
       const blinkDuration = 0.16;
-      const t = this.blinkElapsed / blinkDuration;
-      if (t >= 1) {
+      const t = isPaused ? 0.5 : this.blinkElapsed / blinkDuration;
+      if (!isPaused && t >= 1) {
         this.isBlinking = false;
         this.blinkElapsed = 0;
       } else {
@@ -224,13 +236,13 @@ export class CharacterExpressionManager {
 
     // Speech envelope modulation
     let speechLevel = this.speechMouthAmplitude;
-    if (this.speechEnvelopeTimer > 0) {
+    if (!isPaused && this.speechEnvelopeTimer > 0) {
       this.speechEnvelopeTimer = Math.max(0, this.speechEnvelopeTimer - safeDt);
       const syllable = Math.abs(Math.sin(elapsed * 16)) * 0.65 + Math.abs(Math.sin(elapsed * 27)) * 0.35;
       speechLevel = Math.max(speechLevel, syllable * 0.92);
     }
 
-    const speed = 13;
+    const speed = isPaused ? 1000 : 13;
     this.current.eyeScaleY = THREE.MathUtils.damp(this.current.eyeScaleY, target.eyeScaleY, speed, safeDt);
     this.current.eyeScaleX = THREE.MathUtils.damp(this.current.eyeScaleX, target.eyeScaleX, speed, safeDt);
     this.current.pupilScale = THREE.MathUtils.damp(this.current.pupilScale, target.pupilScale, speed, safeDt);

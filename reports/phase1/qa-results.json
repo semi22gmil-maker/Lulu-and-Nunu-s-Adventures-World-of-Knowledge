@@ -1,0 +1,325 @@
+{
+  "idleCanvasAnimates": true,
+  "luluAnimAllPassed": true,
+  "luluAnimFramesAllChanged": true,
+  "luluAnimResults": [
+    {
+      "label": "الوقوف والتنفس",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "المشي",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الجري",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "القفز",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الاحتفال",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الرقص",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "التصفيق",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "التشجيع",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الإشارة",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "التفكير",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الدهشة",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الضحك",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الحزن اللطيف",
+      "matched": true,
+      "framesChanged": true
+    }
+  ],
+  "luluOneShotReturnIdle": true,
+  "nonoIndependentIdleWhenSwitching": true,
+  "nonoAnimAllPassed": true,
+  "nonoAnimFramesAllChanged": true,
+  "nonoAnimResults": [
+    {
+      "label": "الوقوف والتنفس",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "المشي",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الجري",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "القفز",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الاحتفال",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الرقص",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "التصفيق",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "التشجيع",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الإشارة",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "التفكير",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الدهشة",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الضحك",
+      "matched": true,
+      "framesChanged": true
+    },
+    {
+      "label": "الحزن اللطيف",
+      "matched": true,
+      "framesChanged": true
+    }
+  ],
+  "nonoOneShotReturnIdle": true,
+  "pauseResumeWorked": true,
+  "pauseFramesIdentical": true,
+  "pausePixelDiff": {
+    "totalPixels": 451704,
+    "changedPixels": 0
+  },
+  "playFromPauseUnpaused": true,
+  "oneShotToggleWorked": true,
+  "resetToIdle": true,
+  "expLuluAllPassed": true,
+  "expLuluResults": [
+    {
+      "label": "طبيعي",
+      "matched": true
+    },
+    {
+      "label": "ابتسامة",
+      "matched": true
+    },
+    {
+      "label": "ضحك",
+      "matched": true
+    },
+    {
+      "label": "حزن لطيف",
+      "matched": true
+    },
+    {
+      "label": "دهشة",
+      "matched": true
+    },
+    {
+      "label": "تركيز",
+      "matched": true
+    },
+    {
+      "label": "تفكير",
+      "matched": true
+    },
+    {
+      "label": "تشجيع",
+      "matched": true
+    }
+  ],
+  "luluMouthOpenActive": true,
+  "expNonoAllPassed": true,
+  "expNonoResults": [
+    {
+      "label": "طبيعي",
+      "matched": true
+    },
+    {
+      "label": "ابتسامة",
+      "matched": true
+    },
+    {
+      "label": "ضحك",
+      "matched": true
+    },
+    {
+      "label": "حزن لطيف",
+      "matched": true
+    },
+    {
+      "label": "دهشة",
+      "matched": true
+    },
+    {
+      "label": "تركيز",
+      "matched": true
+    },
+    {
+      "label": "تفكير",
+      "matched": true
+    },
+    {
+      "label": "تشجيع",
+      "matched": true
+    }
+  ],
+  "nonoMouthOpenActive": true,
+  "luluSpeechCaption": "أهلاً بك يا صديقي! أنا لولو، وهذه مغامرتنا لاستعادة النجوم السبع!",
+  "nonoSpeechCaption": "هيا بنا! أنا نونو ومستعد للمغامرة معك!",
+  "orbitChangedView": true,
+  "dualAll9Passed": true,
+  "dualResults": [
+    {
+      "label": "لولو ترحب بنونو",
+      "executed": true,
+      "description": "لولو ترحب بصديقها نونو بحماس ودفء"
+    },
+    {
+      "label": "نونو يلوّح للولو",
+      "executed": true,
+      "description": "نونو يلوّح بيده للولو بابتسامة مرحة"
+    },
+    {
+      "label": "لولو تشير إلى نونو",
+      "executed": true,
+      "description": "لولو تشير إلى نونو ونونو يتفاجأ بلطف"
+    },
+    {
+      "label": "نونو يقفز بسعادة",
+      "executed": true,
+      "description": "نونو يقفز بسعادة ولولو تصفق له"
+    },
+    {
+      "label": "لولو ونونو يحتفلان معاً",
+      "executed": true,
+      "description": "لولو ونونو يحتفلان ويرقصان معاً بنجاح!"
+    },
+    {
+      "label": "نونو يتفاجأ وتنظر إليه لولو",
+      "executed": true,
+      "description": "نونو يتفاجأ وتلتفت إليه لولو باهتمام وابتسامة"
+    },
+    {
+      "label": "الشخصيتان ترحبان بالطفل",
+      "executed": true,
+      "description": "لولو ونونو يرحبان بالطفل في عالم المعرفة!"
+    },
+    {
+      "label": "نونو يصفق للولو",
+      "executed": true,
+      "description": "نونو يصفق بحماس بينما ترقص لولو بفرح"
+    },
+    {
+      "label": "لولو تشجع نونو",
+      "executed": true,
+      "description": "لولو تشجع نونو بلطف ليعود إليه الحماس"
+    }
+  ],
+  "resizeResponded": true,
+  "remount3xPassed": true,
+  "mobileTapWorked": true,
+  "mobileNoHorizontalOverflow": true,
+  "finalStatus": "حالة المشهد: جاهز ومحمّل\n·\nالحركة الحالية: الوقوف والتنفس\n·\nالتعبير الحالي: ابتسامة\nwebgl2-software\n·\n13 FPS\n·\n33,528 مثلث",
+  "screenshots": [
+    "01-character-lab.png",
+    "02-lulu.png",
+    "03-nono.png",
+    "04-both-characters.png",
+    "05-idle.png",
+    "06-jump.png",
+    "07-dance.png",
+    "08-celebrate.png",
+    "09-surprise.png",
+    "10-laugh.png",
+    "11-think.png",
+    "12-dual-interaction.png",
+    "13-interactive-controls.png"
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "luluStartedJump": true,
+  "nonoStartedJump": true,
+  "resumeChangedFrame": true,
+  "resizeMetrics": {
+    "size1440": {
+      "cw": 708,
+      "ch": 638,
+      "w": 708,
+      "h": 638
+    },
+    "size768": {
+      "cw": 718,
+      "ch": 558,
+      "w": 718,
+      "h": 558
+    },
+    "size390": {
+      "cw": 356,
+      "ch": 458,
+      "w": 356,
+      "h": 458
+    }
+  },
+  "isNowOneShot": true,
+  "luluReturnMs": 6141,
+  "nonoReturnMs": 7686
+}

@@ -146,8 +146,8 @@ export const CharacterLab: React.FC = () => {
 
       {/* Main 2-column Character Lab workspace */}
       <div className="grid gap-5 lg:grid-cols-12">
-        <div className="lg:col-span-7 xl:col-span-7 flex flex-col">
-          <div className="relative h-[460px] sm:h-[560px] lg:h-[640px] w-full">
+        <div className="lg:col-span-7 xl:col-span-7 flex min-w-0 flex-col">
+          <div className="relative h-[460px] sm:h-[560px] lg:h-[640px] w-full min-w-0">
             <CharacterCanvas
               ref={stageRef}
               viewMode={viewMode}
@@ -167,7 +167,7 @@ export const CharacterLab: React.FC = () => {
           </p>
         </div>
 
-        <div className="lg:col-span-5 xl:col-span-5">
+        <div className="lg:col-span-5 xl:col-span-5 min-w-0">
           <CharacterControls
             viewMode={viewMode}
             onChangeViewMode={setViewMode}

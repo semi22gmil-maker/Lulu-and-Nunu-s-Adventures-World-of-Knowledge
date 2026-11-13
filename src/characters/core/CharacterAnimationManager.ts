@@ -135,12 +135,15 @@ export class CharacterAnimationManager {
   }
 
   update(dt: number): void {
-    const safeDt = Math.min(dt, 0.05);
-    if (!this.paused) {
-      this.mixer.update(safeDt * this.speedScale);
-      this.totalElapsed += safeDt * this.speedScale;
-      this.stateElapsed += safeDt * this.speedScale;
+    const safeDt = Math.min(dt, 0.08);
+    if (this.paused) {
+      this.expressionManager.update(safeDt, this.totalElapsed, true);
+      return;
     }
+
+    this.mixer.update(safeDt * this.speedScale);
+    this.totalElapsed += safeDt * this.speedScale;
+    this.stateElapsed += safeDt * this.speedScale;
 
     const oneShotDuration = this.profile.oneShotDurations[this.activeState] ?? 1.25;
     let phase = this.stateElapsed;
@@ -225,7 +228,7 @@ export class CharacterAnimationManager {
     const shadowMat = this.rig.contactShadow.material as THREE.MeshBasicMaterial;
     shadowMat.opacity = Math.max(0.22, 0.65 - heightFactor * 0.35);
 
-    this.expressionManager.update(safeDt, this.totalElapsed);
+    this.expressionManager.update(safeDt, this.totalElapsed, false);
   }
 
   dispose(): void {

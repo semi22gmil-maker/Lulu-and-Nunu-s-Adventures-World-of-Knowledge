@@ -237,7 +237,8 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.08;
       renderer.setPixelRatio(profile.maxPixelRatio);
-      renderer.setSize(width, height);
+      renderer.setSize(width, height, false);
+      renderer.domElement.className = 'block h-full w-full';
       renderer.shadowMap.enabled = profile.shadowsEnabled;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -412,9 +413,12 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
         const h = Math.max(320, container.clientHeight);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
+        renderer.setSize(w, h, false);
       };
       window.addEventListener('resize', handleResize);
+      const resizeObserver =
+        typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => handleResize()) : null;
+      resizeObserver?.observe(container);
 
       let frameId = 0;
       let disposed = false;
@@ -436,12 +440,12 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
               frameId = window.setTimeout(poll, 5);
             } else {
               if (sync) gl.deleteSync(sync);
-              frameId = window.setTimeout(cb, 80);
+              frameId = window.setTimeout(cb, 32);
             }
           };
           frameId = window.setTimeout(poll, 5);
         } else {
-          frameId = window.setTimeout(cb, 80);
+          frameId = window.setTimeout(cb, 32);
         }
       };
 
@@ -494,6 +498,7 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
         cancelAnimationFrame(frameId);
         window.clearTimeout(frameId);
         window.removeEventListener('resize', handleResize);
+        resizeObserver?.disconnect();
         controls.removeEventListener('start', handleControlsStart);
         renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
         renderer.domElement.removeEventListener('webglcontextrestored', handleContextRestored);
@@ -542,8 +547,8 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
     }
 
     return (
-      <div className="relative h-full min-h-[440px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-sky-50">
-        <div ref={mountRef} className="h-full min-h-[440px] w-full cursor-grab active:cursor-grabbing" />
+      <div className="relative h-full min-h-[440px] w-full min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-sky-50">
+        <div ref={mountRef} className="h-full min-h-[440px] w-full min-w-0 cursor-grab active:cursor-grabbing" />
         {contextLost && (
           <div className="absolute inset-0 flex items-center justify-center bg-slate-900/75 p-4 text-center text-white">
             <p className="font-display text-sm font-bold">
