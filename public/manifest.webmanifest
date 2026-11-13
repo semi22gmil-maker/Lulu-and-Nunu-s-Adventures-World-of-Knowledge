@@ -1,0 +1,22 @@
+{
+  "id": "/",
+  "name": "مغامرات لولو ونونو – عالم المعرفة",
+  "short_name": "لولو ونونو",
+  "description": "لعبة تعليمية تفاعلية ثلاثية الأبعاد باللغة العربية للأطفال من عمر 4 إلى 10 سنوات.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "lang": "ar",
+  "dir": "rtl",
+  "theme_color": "#0f766e",
+  "background_color": "#f8fafc",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

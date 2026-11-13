@@ -1,0 +1,6 @@
+{
+  "name": "مغامرات لولو ونونو – عالم المعرفة",
+  "description": "لعبة تعليمية تفاعلية ثلاثية الأبعاد باللغة العربية للأطفال من عمر 4 إلى 10 سنوات مع لولو ونونو لاستكشاف سبعة عوالم معرفية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

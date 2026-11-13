@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: "Cairo", "Noto Sans Arabic", "Geeza Pro", "Tahoma", system-ui, -apple-system, sans-serif;
+    --font-body: "Tajawal", "Noto Sans Arabic", "Geeza Pro", "Tahoma", system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    direction: rtl;
+    font-family: var(--font-body);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+
+  :focus-visible {
+    outline: 3px solid #0d9488;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
