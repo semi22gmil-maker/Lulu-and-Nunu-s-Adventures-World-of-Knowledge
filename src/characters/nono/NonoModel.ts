@@ -121,11 +121,12 @@ export function buildNonoModel(): BuiltCharacterModel {
   torsoMesh.receiveShadow = true;
   torso.add(torsoMesh);
 
-  // Creamy-tan round belly patch
-  const bellyGeo = trackGeo(new THREE.SphereGeometry(0.22, 20, 16));
+  // Creamy-tan round belly patch (positioned cleanly proud of Lathe torso)
+  const bellyGeo = trackGeo(new THREE.SphereGeometry(0.198, 20, 16));
   const bellyMesh = new THREE.Mesh(bellyGeo, creamTanMat);
-  bellyMesh.scale.set(0.88, 0.96, 0.56);
-  bellyMesh.position.set(0, 0.055, 0.165);
+  bellyMesh.scale.set(0.84, 0.9, 0.46);
+  bellyMesh.position.set(0, 0.055, 0.22);
+  bellyMesh.rotation.x = 0.08;
   torso.add(bellyMesh);
 
   // Adventurer Scarf around neck

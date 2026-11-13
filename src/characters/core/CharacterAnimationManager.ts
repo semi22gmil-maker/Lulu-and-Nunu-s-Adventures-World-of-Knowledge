@@ -47,10 +47,10 @@ export class CharacterAnimationManager {
     rightEarX: 0,
     rightEarZ: 0,
     leftArmX: 0,
-    leftArmZ: 0.22,
+    leftArmZ: -0.24,
     leftElbowX: -0.15,
     rightArmX: 0,
-    rightArmZ: -0.22,
+    rightArmZ: 0.24,
     rightElbowX: -0.15,
     leftLegX: 0,
     leftLegZ: 0,
@@ -180,11 +180,11 @@ export class CharacterAnimationManager {
     this.pose.rightEarZ = damp(this.pose.rightEarZ, targetSample.rightEarZ ?? -0.08);
 
     this.pose.leftArmX = damp(this.pose.leftArmX, targetSample.leftArmX ?? 0);
-    this.pose.leftArmZ = damp(this.pose.leftArmZ, targetSample.leftArmZ ?? 0.24);
+    this.pose.leftArmZ = damp(this.pose.leftArmZ, targetSample.leftArmZ ?? -0.24);
     this.pose.leftElbowX = damp(this.pose.leftElbowX, targetSample.leftElbowX ?? -0.18);
 
     this.pose.rightArmX = damp(this.pose.rightArmX, targetSample.rightArmX ?? 0);
-    this.pose.rightArmZ = damp(this.pose.rightArmZ, targetSample.rightArmZ ?? -0.24);
+    this.pose.rightArmZ = damp(this.pose.rightArmZ, targetSample.rightArmZ ?? 0.24);
     this.pose.rightElbowX = damp(this.pose.rightElbowX, targetSample.rightElbowX ?? -0.18);
 
     this.pose.leftLegX = damp(this.pose.leftLegX, targetSample.leftLegX ?? 0);

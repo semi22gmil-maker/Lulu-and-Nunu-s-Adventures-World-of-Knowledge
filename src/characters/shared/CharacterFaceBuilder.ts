@@ -50,25 +50,26 @@ export function createCharacterEye(
   catchlightSub.position.set(-0.015, -0.016, 0.021);
   iris.add(catchlightSub);
 
-  // Upper eyelid dome (closes downward)
-  const lidGeo = new THREE.SphereGeometry(0.094, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.55);
+  // Upper eyelid dome (hinged around eye center via rotation.x: -1.45 rad open -> +0.15 rad closed)
+  const lidGeo = new THREE.SphereGeometry(0.093, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.52);
   const upperLid = new THREE.Mesh(lidGeo, eyelidMat);
-  upperLid.scale.set(0.98, 1.06, 0.78);
-  upperLid.position.y = 0.006;
+  upperLid.scale.set(0.98, 1.08, 0.76);
+  upperLid.rotation.x = -Math.PI * 0.46;
   upperLid.visible = false;
   group.add(upperLid);
 
-  // Lower eyelid dome (closes upward)
-  const lowerLidGeo = new THREE.SphereGeometry(0.093, 18, 10, 0, Math.PI * 2, Math.PI * 0.55, Math.PI * 0.45);
+  // Lower eyelid dome (hinged around eye center via rotation.x: +1.45 rad open -> 0 rad closed)
+  const lowerLidGeo = new THREE.SphereGeometry(0.092, 18, 10, 0, Math.PI * 2, Math.PI * 0.5, Math.PI * 0.5);
   const lowerLid = new THREE.Mesh(lowerLidGeo, eyelidMat);
-  lowerLid.scale.set(0.98, 1.02, 0.77);
+  lowerLid.scale.set(0.98, 1.06, 0.75);
+  lowerLid.rotation.x = Math.PI * 0.46;
   lowerLid.visible = false;
   group.add(lowerLid);
 
-  // Happy crescent eye arc (shown during laugh / warm smile)
-  const happyGeo = new THREE.TorusGeometry(0.056, 0.011, 10, 20, Math.PI * 0.85);
+  // Happy crescent eye arc (shown during cheerful Laugh when eyes squint happily)
+  const happyGeo = new THREE.TorusGeometry(0.052, 0.011, 10, 20, Math.PI * 0.84);
   const happyArc = new THREE.Mesh(happyGeo, happyArcMat);
-  happyArc.position.set(0, 0.005, 0.068);
+  happyArc.position.set(0, -0.008, 0.068);
   happyArc.rotation.z = Math.PI * 0.08;
   happyArc.visible = false;
   group.add(happyArc);

@@ -22,24 +22,24 @@ const EXPRESSION_PRESETS: Record<FacialExpression, ExpressionTargetState> = {
     oShapeWeight: 0,
   },
   [FacialExpression.Smile]: {
-    eyeScaleY: 0.94,
-    eyeScaleX: 1.03,
-    pupilScale: 1.06,
-    lidClosure: 0.08,
-    happyEyeWeight: 0.35,
+    eyeScaleY: 1.0,
+    eyeScaleX: 1.04,
+    pupilScale: 1.08,
+    lidClosure: 0,
+    happyEyeWeight: 0.2,
     browYOffset: 0.015,
     browTiltZ: 0.08,
-    cheekOpacity: 0.6,
+    cheekOpacity: 0.62,
     mouthOpen: 0.14,
     smileWeight: 1,
     sadWeight: 0,
     oShapeWeight: 0,
   },
   [FacialExpression.Laugh]: {
-    eyeScaleY: 0.55,
+    eyeScaleY: 0.72,
     eyeScaleX: 1.12,
     pupilScale: 1.08,
-    lidClosure: 0.35,
+    lidClosure: 0.82,
     happyEyeWeight: 1,
     browYOffset: 0.03,
     browTiltZ: 0.12,
@@ -257,11 +257,11 @@ export class CharacterExpressionManager {
     this.applyEyeState(this.rig.leftEye, this.leftEyeBaseScale, totalLidClose);
     this.applyEyeState(this.rig.rightEye, this.rightEyeBaseScale, totalLidClose);
 
-    // Eyebrows
+    // Eyebrows (preserve horizontal Math.PI / 2 capsule alignment!)
     this.rig.leftBrow.position.y = this.leftBrowBaseY + this.current.browYOffset;
     this.rig.rightBrow.position.y = this.rightBrowBaseY + this.current.browYOffset;
-    this.rig.leftBrow.rotation.z = this.current.browTiltZ;
-    this.rig.rightBrow.rotation.z = -this.current.browTiltZ;
+    this.rig.leftBrow.rotation.z = Math.PI / 2 + this.current.browTiltZ;
+    this.rig.rightBrow.rotation.z = Math.PI / 2 - this.current.browTiltZ;
 
     // Rosy cheeks
     const leftCheekMat = this.rig.leftCheek.material as THREE.MeshStandardMaterial;
@@ -303,14 +303,14 @@ export class CharacterExpressionManager {
     eye.iris.position.y = this.gazeOffsetY;
     eye.pupil.scale.setScalar(this.current.pupilScale);
 
-    // Upper & lower eyelids close toward eye center smoothly
-    eye.upperLid.scale.y = Math.max(0.05, lidClose * 1.05);
-    eye.upperLid.visible = lidClose > 0.04;
-    eye.lowerLid.scale.y = Math.max(0.05, lidClose * 0.65);
+    // Rotate upper & lower eyelids smoothly around X-axis from tucked-behind (-0.46PI/+0.46PI) to closed (0.05PI/0)
+    eye.upperLid.visible = lidClose > 0.05;
+    eye.upperLid.rotation.x = THREE.MathUtils.lerp(-Math.PI * 0.46, 0.16, lidClose);
     eye.lowerLid.visible = lidClose > 0.12;
+    eye.lowerLid.rotation.x = THREE.MathUtils.lerp(Math.PI * 0.46, -0.06, lidClose);
 
-    const showHappyArc = this.current.happyEyeWeight > 0.42 && lidClose < 0.7;
+    const showHappyArc = this.current.happyEyeWeight > 0.72 && lidClose > 0.4;
     eye.happyArc.visible = showHappyArc;
-    eye.happyArc.scale.setScalar(0.75 + this.current.happyEyeWeight * 0.3);
+    eye.happyArc.scale.setScalar(0.85 + this.current.happyEyeWeight * 0.25);
   }
 }

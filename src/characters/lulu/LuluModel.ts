@@ -126,11 +126,12 @@ export function buildLuluModel(): BuiltCharacterModel {
   torsoMesh.receiveShadow = true;
   torso.add(torsoMesh);
 
-  // Soft lighter tummy patch
-  const bellyGeo = trackGeo(new THREE.SphereGeometry(0.18, 20, 16));
+  // Soft lighter tummy patch (positioned proud of Lathe torso to eliminate Z-fighting)
+  const bellyGeo = trackGeo(new THREE.SphereGeometry(0.165, 20, 16));
   const bellyMesh = new THREE.Mesh(bellyGeo, softCharcoalMat);
-  bellyMesh.scale.set(0.86, 1.05, 0.52);
-  bellyMesh.position.set(0, 0.07, 0.14);
+  bellyMesh.scale.set(0.82, 0.96, 0.44);
+  bellyMesh.position.set(0, 0.065, 0.184);
+  bellyMesh.rotation.x = 0.08;
   torso.add(bellyMesh);
 
   // Explorer smart collar / vest trim + Golden Knowledge Star Pin
