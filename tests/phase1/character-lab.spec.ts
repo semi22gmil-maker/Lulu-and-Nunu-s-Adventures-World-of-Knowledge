@@ -344,14 +344,14 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
 
     const timedCheck = INTERACTION_CHECKS[1];
     await page.getByRole('button', { name: timedCheck.label, exact: true }).click();
-    await expect(page.getByText(new RegExp(timedCheck.expectStep1))).toBeVisible();
-    await expect(page.getByText(new RegExp(timedCheck.expectStep2))).toBeVisible({ timeout: 5_000 });
+    await expect(page.locator('p', { hasText: timedCheck.expectStep1 })).toBeVisible();
+    await expect(page.locator('p', { hasText: timedCheck.expectStep2 })).toBeVisible({ timeout: 5_000 });
     await captureScreenshot(page, '06-dual-interactions-test.png');
 
     for (const item of INTERACTION_CHECKS) {
       if (item.label === timedCheck.label) continue;
       await page.getByRole('button', { name: item.label, exact: true }).click();
-      await expect(page.getByText(new RegExp(item.expectStep1))).toBeVisible();
+      await expect(page.locator('p', { hasText: item.expectStep1 })).toBeVisible();
       await page.waitForTimeout(220);
     }
 
@@ -435,7 +435,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
 
     await page.getByRole('button', { name: 'استئناف', exact: true }).click();
     await expect(page.getByRole('button', { name: 'إيقاف', exact: true })).toBeVisible();
-    await page.waitForTimeout(550);
+    await page.waitForTimeout(900);
     const resumedFrame = await sampleCanvasFrame(page);
     expect(countChangedPixels(pausedB.data, resumedFrame.data)).toBeGreaterThan(0);
 
@@ -488,6 +488,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
     await expect(page.getByText(/الحركة الحالية:\s*الرقص/)).toBeVisible();
 
     await page.getByRole('button', { name: 'ابتسامة', exact: true }).tap();
+    await expect(page.getByText(/التعبير الحالي:\s*ابتسامة/)).toBeVisible();
     await page.waitForTimeout(400);
 
     const overflowCheck = await page.evaluate(() => ({

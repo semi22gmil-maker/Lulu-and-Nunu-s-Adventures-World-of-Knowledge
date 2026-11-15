@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T21:33:42.228Z",
+  "generatedAt": "2026-11-15T20:14:59.595Z",
   "environment": "Headless Chromium + ANGLE SwiftShader WebGL2 against production dist/ build",
   "baseUrl": "http://127.0.0.1:4173",
   "runtimeErrors": {
@@ -8,14 +8,191 @@
     "failedRequests": []
   },
   "summary": {
-    "totalChecks": 0,
-    "passedChecks": 0,
+    "totalChecks": 7,
+    "passedChecks": 7,
     "failedChecks": 0
   },
-  "checks": {},
+  "checks": {
+    "appLoadAndSwitch": {
+      "status": "PASS",
+      "bothTriangles": 33528,
+      "luluTriangles": 17362,
+      "nonoTriangles": 18242,
+      "reloadVerified": true
+    },
+    "animations13x2": {
+      "status": "PASS",
+      "luluCount": 13,
+      "nonoCount": 13,
+      "nonoIndependentIdleWhenSwitching": true,
+      "oneShotReturnedToIdle": true,
+      "luluResults": {
+        "الوقوف والتنفس": {
+          "statusUpdated": true,
+          "changedPixels": 5581
+        },
+        "المشي": {
+          "statusUpdated": true,
+          "changedPixels": 2734
+        },
+        "الجري": {
+          "statusUpdated": true,
+          "changedPixels": 2555
+        },
+        "القفز": {
+          "statusUpdated": true,
+          "changedPixels": 3765
+        },
+        "الاحتفال": {
+          "statusUpdated": true,
+          "changedPixels": 3417
+        },
+        "الرقص": {
+          "statusUpdated": true,
+          "changedPixels": 4286
+        },
+        "التصفيق": {
+          "statusUpdated": true,
+          "changedPixels": 3383
+        },
+        "التشجيع": {
+          "statusUpdated": true,
+          "changedPixels": 2190
+        },
+        "الإشارة": {
+          "statusUpdated": true,
+          "changedPixels": 3021
+        },
+        "التفكير": {
+          "statusUpdated": true,
+          "changedPixels": 2097
+        },
+        "الدهشة": {
+          "statusUpdated": true,
+          "changedPixels": 4430
+        },
+        "الضحك": {
+          "statusUpdated": true,
+          "changedPixels": 2495
+        },
+        "الحزن اللطيف": {
+          "statusUpdated": true,
+          "changedPixels": 3554
+        }
+      },
+      "nonoResults": {
+        "الوقوف والتنفس": {
+          "statusUpdated": true,
+          "changedPixels": 5915
+        },
+        "المشي": {
+          "statusUpdated": true,
+          "changedPixels": 2459
+        },
+        "الجري": {
+          "statusUpdated": true,
+          "changedPixels": 1943
+        },
+        "القفز": {
+          "statusUpdated": true,
+          "changedPixels": 3061
+        },
+        "الاحتفال": {
+          "statusUpdated": true,
+          "changedPixels": 4351
+        },
+        "الرقص": {
+          "statusUpdated": true,
+          "changedPixels": 2680
+        },
+        "التصفيق": {
+          "statusUpdated": true,
+          "changedPixels": 2422
+        },
+        "التشجيع": {
+          "statusUpdated": true,
+          "changedPixels": 1982
+        },
+        "الإشارة": {
+          "statusUpdated": true,
+          "changedPixels": 2675
+        },
+        "التفكير": {
+          "statusUpdated": true,
+          "changedPixels": 1761
+        },
+        "الدهشة": {
+          "statusUpdated": true,
+          "changedPixels": 4164
+        },
+        "الضحك": {
+          "statusUpdated": true,
+          "changedPixels": 2871
+        },
+        "الحزن اللطيف": {
+          "statusUpdated": true,
+          "changedPixels": 3219
+        }
+      }
+    },
+    "expressionsAndLipSync": {
+      "status": "PASS",
+      "testedExpressionsCount": 8,
+      "blinkTriggered": true,
+      "manualMouthOpenChangedCanvas": true,
+      "luluLipSyncCaptionDisplayed": true,
+      "nonoLipSyncCaptionDisplayed": true
+    },
+    "dualInteractions9": {
+      "status": "PASS",
+      "totalTested": 9,
+      "delayedTimerFromSoloModeSurvived": true
+    },
+    "cameraLightingPauseResize": {
+      "status": "PASS",
+      "cameraPresetsTested": 4,
+      "orbitDragChangedView": true,
+      "lightingPresetsTested": 3,
+      "pausedChangedPixels": 0,
+      "resumedFrameChanged": true,
+      "resizeWidths": {
+        "desktop": 708,
+        "tablet": 718,
+        "mobile": 356
+      }
+    },
+    "mobileTouch": {
+      "status": "PASS",
+      "viewport": "390x844",
+      "touchTapWorked": true,
+      "noHorizontalOverflow": true
+    },
+    "stabilityAndDisposal": {
+      "status": "PASS",
+      "remountCycles": 3,
+      "webglMode": "webgl2-software",
+      "initialGeometries": 74,
+      "finalGeometries": 74,
+      "initialTextures": 8,
+      "finalTextures": 8,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "failedRequests": 0
+    }
+  },
   "screenshots": [
     "reports/phase1/screenshots/01-lulu-solo.png",
+    "reports/phase1/screenshots/02-nono-solo.png",
     "reports/phase1/screenshots/03-both-characters.png",
-    "reports/phase1/screenshots/07-character-lab-full.png"
+    "reports/phase1/screenshots/04-animations-test.png",
+    "reports/phase1/screenshots/05-expressions-test.png",
+    "reports/phase1/screenshots/06-dual-interactions-test.png",
+    "reports/phase1/screenshots/07-character-lab-full.png",
+    "reports/phase1/screenshots/08-camera-test.png",
+    "reports/phase1/screenshots/09-lighting-test.png",
+    "reports/phase1/screenshots/10-mobile-screen-test.png",
+    "reports/phase1/screenshots/11-interactive-controls-test.png",
+    "reports/phase1/screenshots/12-pause-resume-test.png",
+    "reports/phase1/screenshots/13-screen-resize-test.png"
   ]
 }
