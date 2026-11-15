@@ -239,6 +239,7 @@ test.describe.serial('Phase 2 — 14 Core Game Screens, Persistence & Guards Ver
     const reducedCheckbox = page.getByRole('checkbox', { name: /Reduced Motion/ });
     await reducedCheckbox.check();
     await expect(page.locator('html')).toHaveClass(/reduced-motion/);
+    await page.evaluate(() => window.scrollTo(0, 0));
     await capture(page, '09-parent-dashboard.png');
     await reducedCheckbox.uncheck();
 
@@ -325,7 +326,7 @@ test.describe.serial('Phase 2 — 14 Core Game Screens, Persistence & Guards Ver
     await page.getByRole('button', { name: /استعادة نجمة البيان/ }).click();
     await expect(page.getByTestId('screen-star-restore')).toBeVisible();
     await expect(page.getByText('تمت استعادة نجمة البيان!')).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByText('عالم الأرقام والرياضيات!')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('عالم الأرقام والحساب!')).toBeVisible({ timeout: 10_000 });
     await waitFor3DFrameIfPresent(page, 650);
     await capture(page, '14-star-restore.png');
 

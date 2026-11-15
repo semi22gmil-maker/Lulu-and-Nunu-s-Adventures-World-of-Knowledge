@@ -39,11 +39,11 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         {/* Zone 1: Brand or Back */}
         <div className="flex items-center gap-3 min-w-0">
-          {showBack && state.navStack.length > 1 ? (
+          {showBack && (state.navStack.length > 1 || Boolean(onBack)) ? (
             <button
               type="button"
               onClick={handleBack}
-              aria-label="العودة للشاشة السابقة"
+              aria-label="رجوع إلى الشاشة السابقة"
               className="inline-flex min-h-11 items-center gap-1.5 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-800 transition-colors hover:bg-slate-100 whitespace-nowrap shrink-0"
             >
               <ArrowRight className="h-4 w-4 text-teal-700" />

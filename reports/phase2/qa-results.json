@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T20:50:36.580Z",
+  "generatedAt": "2026-11-15T21:13:11.385Z",
   "environment": "Headless Chromium + ANGLE SwiftShader WebGL2 against production dist/ build",
   "baseUrl": "http://127.0.0.1:4173",
   "runtimeErrors": {
@@ -8,18 +8,25 @@
     "failedRequests": []
   },
   "summary": {
-    "totalChecks": 1,
-    "passedChecks": 1,
+    "totalChecks": 2,
+    "passedChecks": 2,
     "failedChecks": 0
   },
   "checks": {
     "firstRunAndPersistence": {
       "status": "PASS",
       "rtlDirection": "rtl",
-      "splashCanvasNonBlankPixels": 10780,
-      "homeCanvasNonBlankPixels": 10781,
+      "splashCanvasNonBlankPixels": 10787,
+      "homeCanvasNonBlankPixels": 10783,
       "profileValidationBlockedShortName": true,
       "profileRestoredAfterReload": "نور"
+    },
+    "parentGateAndDashboard": {
+      "status": "PASS",
+      "wrongAnswerBlocked": true,
+      "solvedChallenge": "6x8+9=57",
+      "reducedMotionClassSynced": true,
+      "relockedAfterReload": true
     }
   },
   "screenshots": [
@@ -27,6 +34,8 @@
     "reports/phase2/screenshots/02-welcome-story.png",
     "reports/phase2/screenshots/03-create-profile.png",
     "reports/phase2/screenshots/04-home-dashboard.png",
+    "reports/phase2/screenshots/06-rewards.png",
+    "reports/phase2/screenshots/07-profile.png",
     "reports/phase2/screenshots/08-parent-gate.png",
     "reports/phase2/screenshots/09-parent-dashboard.png"
   ]

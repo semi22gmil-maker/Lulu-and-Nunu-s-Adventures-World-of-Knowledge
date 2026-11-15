@@ -100,7 +100,7 @@ export const WorldMapScreen: React.FC = () => {
                 key={world.id}
                 type="button"
                 data-testid={`world-card-${world.id}`}
-                aria-disabled={!unlocked}
+                data-locked={!unlocked}
                 onClick={() => handleWorldClick(world)}
                 className={`flex flex-col justify-between rounded-3xl border p-5 text-right transition-colors ${
                   unlocked

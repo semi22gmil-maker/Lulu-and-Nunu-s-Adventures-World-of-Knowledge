@@ -97,7 +97,7 @@ export const StageSelectScreen: React.FC = () => {
                 key={stage.id}
                 type="button"
                 data-testid={`stage-card-${stage.id}`}
-                aria-disabled={!unlocked}
+                data-locked={!unlocked}
                 onClick={() => handleStageSelect(stage)}
                 className={`flex items-center justify-between gap-4 rounded-3xl border p-5 text-right transition-colors ${
                   completed
