@@ -122,6 +122,7 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
 
     const sceneObjectsRef = useRef<{
       scene: THREE.Scene;
+      renderer: THREE.WebGLRenderer;
       camera: THREE.PerspectiveCamera;
       controls: OrbitControls;
       lulu: CharacterController;
@@ -427,6 +428,7 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
 
       const sceneCtx = {
         scene,
+        renderer,
         camera,
         controls,
         lulu,
@@ -578,6 +580,7 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
       _camTargetPos.copy(targets.pos);
       _camTargetLook.copy(targets.look);
       ctx.cameraTransitionActive = true;
+      ctx.renderer.render(ctx.scene, ctx.camera);
     }, [viewMode]);
 
     // Respond to lightingPreset changes without rebuilding WebGL scene

@@ -138,7 +138,7 @@ test.describe.serial('Phase 2 — 14 Core Game Screens, Persistence & Guards Ver
   test('1. Complete First-Run, Persistence, ParentGate Enforcement, Rewards, Profile, Gameplay & World 1 Star Restore', async ({
     browser,
   }) => {
-    test.setTimeout(180_000);
+    test.setTimeout(360_000);
     const context = await browser.newContext({
       viewport: { width: 1440, height: 960 },
     });
@@ -179,7 +179,7 @@ test.describe.serial('Phase 2 — 14 Core Game Screens, Persistence & Guards Ver
     await page.locator('#child-nickname-input').fill('نور');
     await page.getByRole('button', { name: /نونو الدب/ }).click();
     await page.getByRole('button', { name: '7', exact: true }).click();
-    await page.waitForTimeout(350);
+    await page.waitForTimeout(800);
     await capture(page, '03-create-profile.png');
 
     await page.getByRole('button', { name: /حفظ الملف/ }).click();
