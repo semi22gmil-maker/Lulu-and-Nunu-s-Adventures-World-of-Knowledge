@@ -48,6 +48,12 @@ interface CharacterCanvasProps {
   lightingPreset: LightingPreset;
   qualityTier: QualityTier;
   onTelemetry?: (stats: CharacterStageTelemetry) => void;
+  initialAnimation?: CharacterAnimState;
+  initialExpression?: FacialExpression;
+  initialInteraction?: DualInteractionId;
+  allowOrbit?: boolean;
+  minHeightClass?: string;
+  onCharacterTap?: () => void;
 }
 
 const _camTargetPos = new THREE.Vector3();
@@ -89,7 +95,21 @@ function computeCameraPresetTargets(
 let webglMountCount = 0;
 
 export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterCanvasProps>(
-  ({ viewMode, lightingPreset, qualityTier, onTelemetry }, ref) => {
+  (
+    {
+      viewMode,
+      lightingPreset,
+      qualityTier,
+      onTelemetry,
+      initialAnimation,
+      initialExpression,
+      initialInteraction,
+      allowOrbit = true,
+      minHeightClass = 'min-h-[440px]',
+      onCharacterTap,
+    },
+    ref
+  ) => {
     const mountRef = useRef<HTMLDivElement | null>(null);
     const [contextLost, setContextLost] = useState(false);
     const [noWebglFallback, setNoWebglFallback] = useState(false);
@@ -272,7 +292,8 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
 
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.target.copy(initCam.look);
-      controls.enableDamping = !profile.isSoftwareGl;
+      controls.enabled = allowOrbit;
+      controls.enableDamping = allowOrbit && !profile.isSoftwareGl;
       controls.dampingFactor = 0.08;
       controls.enablePan = false;
       controls.minDistance = 1.25;
@@ -366,6 +387,18 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
 
       const interactions = new CharacterInteractionManager();
 
+      if (initialExpression) {
+        lulu.setExpression(initialExpression);
+        nono.setExpression(initialExpression);
+      }
+      if (initialAnimation) {
+        lulu.playAnimation(initialAnimation, { loop: true });
+        nono.playAnimation(initialAnimation, { loop: true });
+      }
+      if (initialInteraction) {
+        interactions.runInteraction(initialInteraction, lulu, nono);
+      }
+
       if (!profile.isSoftwareGl) {
         renderer.compile(scene, camera);
       }
@@ -422,8 +455,8 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
 
       const handleResize = () => {
         if (!container || disposed || isContextLost) return;
-        const w = Math.max(300, container.clientWidth);
-        const h = Math.max(320, container.clientHeight);
+        const w = Math.max(220, container.clientWidth);
+        const h = Math.max(200, container.clientHeight);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h, false);
@@ -556,7 +589,9 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
 
     if (noWebglFallback) {
       return (
-        <div className="flex h-full min-h-[420px] flex-col items-center justify-center rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center">
+        <div
+          className={`flex h-full ${minHeightClass} flex-col items-center justify-center rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center`}
+        >
           <p className="font-display text-base font-bold text-amber-950">
             تم تفعيل المسار الاحتياطي (WebGL غير متاح على هذا المتصفح)
           </p>
@@ -568,8 +603,16 @@ export const CharacterCanvas = React.forwardRef<CharacterStageHandle, CharacterC
     }
 
     return (
-      <div className="relative h-full min-h-[440px] w-full min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-sky-50">
-        <div ref={mountRef} className="h-full min-h-[440px] w-full min-w-0 cursor-grab active:cursor-grabbing" />
+      <div
+        onClick={onCharacterTap}
+        className={`relative h-full ${minHeightClass} w-full min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-sky-50`}
+      >
+        <div
+          ref={mountRef}
+          className={`h-full ${minHeightClass} w-full min-w-0 ${
+            allowOrbit ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'
+          }`}
+        />
         {contextLost && (
           <div className="absolute inset-0 flex items-center justify-center bg-slate-900/75 p-4 text-center text-white">
             <p className="font-display text-sm font-bold">

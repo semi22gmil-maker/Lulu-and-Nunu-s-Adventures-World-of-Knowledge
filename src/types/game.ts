@@ -106,6 +106,7 @@ export interface ChildProfile {
   name: string;
   age: number;
   avatarCompanion: CharacterId;
+  startingDifficulty?: DifficultyLevel;
   createdAt: number;
   lastActiveAt: number;
   xp: number;
@@ -128,6 +129,7 @@ export interface ParentSettings {
   qualityTier: QualityTier;
   dailyLimitMinutes: number; // 0 means unlimited
   parentPinHash: string | null;
+  reducedMotion: boolean;
 }
 
 export interface ActivityAttempt {
@@ -151,6 +153,20 @@ export interface DrawingRecord {
   createdAt: number;
 }
 
+export interface StageRunSummary {
+  worldId: WorldId;
+  stageId: string;
+  stageTitleAr: string;
+  correctCount: number;
+  totalSteps: number;
+  xpEarned: number;
+  coinsEarned: number;
+  newlyCompletedStage: boolean;
+  eligibleForStarRestore: boolean;
+  newlyUnlockedBadges: string[];
+  completedAt: number;
+}
+
 export interface NavEntry {
   screen: ScreenId;
   params?: {
@@ -162,10 +178,12 @@ export interface NavEntry {
 
 export interface GameState {
   initialized: boolean;
+  storySeen: boolean;
   activeProfileId: string | null;
   profiles: Record<string, ChildProfile>;
   settings: ParentSettings;
   navStack: NavEntry[];
   parentGateUnlockedUntil: number;
   sessionStartAt: number;
+  lastStageRun: StageRunSummary | null;
 }

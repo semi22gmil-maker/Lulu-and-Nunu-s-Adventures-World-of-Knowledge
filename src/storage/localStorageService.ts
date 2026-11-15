@@ -1,9 +1,11 @@
-import { ParentSettings, QualityTier } from '../types/game';
+import { NavEntry, ParentSettings, QualityTier } from '../types/game';
 
 const STORAGE_PREFIX = 'lulu_nono_v1_';
 const SETTINGS_KEY = `${STORAGE_PREFIX}settings`;
 const ACTIVE_PROFILE_KEY = `${STORAGE_PREFIX}active_profile_id`;
 const LAST_SCREEN_KEY = `${STORAGE_PREFIX}last_screen`;
+const LAST_NAV_KEY = `${STORAGE_PREFIX}last_nav`;
+const STORY_SEEN_KEY = `${STORAGE_PREFIX}story_seen`;
 
 export const DEFAULT_PARENT_SETTINGS: ParentSettings = {
   soundEnabled: true,
@@ -15,6 +17,7 @@ export const DEFAULT_PARENT_SETTINGS: ParentSettings = {
   qualityTier: QualityTier.Medium,
   dailyLimitMinutes: 0,
   parentPinHash: null,
+  reducedMotion: false,
 };
 
 function safeRead<T>(key: string, fallback: T): T {
@@ -64,6 +67,22 @@ export const localStorageService = {
 
   saveLastScreen(screenId: string): boolean {
     return safeWrite(LAST_SCREEN_KEY, screenId);
+  },
+
+  loadLastNav(): NavEntry | null {
+    return safeRead<NavEntry | null>(LAST_NAV_KEY, null);
+  },
+
+  saveLastNav(entry: NavEntry): boolean {
+    return safeWrite(LAST_NAV_KEY, entry);
+  },
+
+  loadStorySeen(): boolean {
+    return safeRead<boolean>(STORY_SEEN_KEY, false);
+  },
+
+  saveStorySeen(seen: boolean): boolean {
+    return safeWrite(STORY_SEEN_KEY, seen);
   },
 
   clearAllAppKeys(): void {

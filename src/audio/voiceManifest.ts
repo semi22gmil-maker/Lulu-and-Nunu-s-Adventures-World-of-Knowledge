@@ -61,6 +61,30 @@ export const VOICE_CLIP_MANIFEST: Record<string, VoiceClipDescriptor> = {
     localAssetPath: null,
     estimatedDurationMs: 1800,
   },
+  'story_lost_stars': {
+    id: 'story_lost_stars',
+    speaker: CharacterId.Lulu,
+    category: 'welcome',
+    textAr: 'تبعثرت نجوم المعرفة السبع في العوالم السبعة، ونحتاج إلى ذكائك لإعادتها!',
+    localAssetPath: null,
+    estimatedDurationMs: 3200,
+  },
+  'story_nono_ready': {
+    id: 'story_nono_ready',
+    speaker: CharacterId.Nono,
+    category: 'encourage',
+    textAr: 'سأرافقك أنا ولولو في كل عالم حتى تعود كل النجوم مضيئة!',
+    localAssetPath: null,
+    estimatedDurationMs: 2800,
+  },
+  'star_restored_celebration': {
+    id: 'star_restored_celebration',
+    speaker: CharacterId.Lulu,
+    category: 'celebrate',
+    textAr: 'مبارك! استعدت نجمة المعرفة وأضأت السماء من جديد!',
+    localAssetPath: null,
+    estimatedDurationMs: 2800,
+  },
 };
 
 export function getVoiceClip(clipId: string): VoiceClipDescriptor | undefined {

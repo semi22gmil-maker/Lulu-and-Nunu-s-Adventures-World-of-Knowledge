@@ -37,7 +37,7 @@ function resolveChromiumExecutable(): string | undefined {
 const executablePath = resolveChromiumExecutable();
 
 export default defineConfig({
-  testDir: './tests/phase1',
+  testDir: './tests',
   fullyParallel: false,
   workers: 1,
   retries: 0,

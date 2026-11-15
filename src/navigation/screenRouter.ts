@@ -1,4 +1,5 @@
-import { NavEntry, ScreenId } from '../types/game';
+import { worldRegistry } from '../registry/worldRegistry';
+import { ChildProfile, NavEntry, ScreenId, WorldId } from '../types/game';
 
 export interface ScreenMetadata {
   id: ScreenId;
@@ -121,6 +122,42 @@ export const SCREEN_DIRECTORY: Record<ScreenId, ScreenMetadata> = {
   },
 };
 
+export function isStageUnlockedForProfile(
+  profile: ChildProfile,
+  worldId: WorldId,
+  stageId: string
+): boolean {
+  const world = worldRegistry.getById(worldId);
+  const wp = profile.worldProgress[worldId];
+  if (!world || !wp || !wp.unlocked) return false;
+
+  const idx = world.stages.findIndex((s) => s.id === stageId);
+  if (idx === -1) return false;
+  if (idx === 0) return true;
+  const prevStage = world.stages[idx - 1];
+  return wp.completedStageIds.includes(prevStage.id) || wp.completedStageIds.includes(stageId);
+}
+
+export function getNextAvailableWorldAndStage(profile: ChildProfile): {
+  worldId: WorldId;
+  stageId: string;
+} {
+  const worlds = worldRegistry.getAll();
+  for (const world of worlds) {
+    const wp = profile.worldProgress[world.id];
+    if (!wp?.unlocked) continue;
+    const nextStage = world.stages.find((s) => !wp.completedStageIds.includes(s.id));
+    if (nextStage) {
+      return { worldId: world.id, stageId: nextStage.id };
+    }
+  }
+  const fallbackWorld = worlds.find((w) => profile.worldProgress[w.id]?.unlocked) ?? worlds[0];
+  return {
+    worldId: fallbackWorld.id,
+    stageId: fallbackWorld.stages[0].id,
+  };
+}
+
 export function resolveNavigationTarget(
   target: NavEntry,
   parentGateUnlockedUntil: number,
@@ -137,4 +174,51 @@ export function resolveNavigationTarget(
     };
   }
   return target;
+}
+
+export function resolveGuardedNavigation(
+  target: NavEntry,
+  parentGateUnlockedUntil: number,
+  activeProfile: ChildProfile | null,
+  storySeen: boolean,
+  now = Date.now()
+): NavEntry {
+  const gateChecked = resolveNavigationTarget(target, parentGateUnlockedUntil, now);
+  const meta = SCREEN_DIRECTORY[gateChecked.screen];
+
+  if (!meta) {
+    return { screen: activeProfile ? ScreenId.Home : ScreenId.WelcomeStory };
+  }
+
+  if (meta.requiresProfile && !activeProfile) {
+    return {
+      screen: storySeen ? ScreenId.CreateProfile : ScreenId.WelcomeStory,
+    };
+  }
+
+  if (activeProfile) {
+    if (
+      gateChecked.screen === ScreenId.WorldDetails ||
+      gateChecked.screen === ScreenId.StageSelect ||
+      gateChecked.screen === ScreenId.StarRestore
+    ) {
+      const worldId = gateChecked.params?.worldId;
+      if (!worldId || !activeProfile.worldProgress[worldId]?.unlocked) {
+        return { screen: ScreenId.WorldMap };
+      }
+    }
+
+    if (gateChecked.screen === ScreenId.Gameplay) {
+      const worldId = gateChecked.params?.worldId;
+      const stageId = gateChecked.params?.stageId;
+      if (!worldId || !stageId || !isStageUnlockedForProfile(activeProfile, worldId, stageId)) {
+        if (worldId && activeProfile.worldProgress[worldId]?.unlocked) {
+          return { screen: ScreenId.StageSelect, params: { worldId } };
+        }
+        return { screen: ScreenId.WorldMap };
+      }
+    }
+  }
+
+  return gateChecked;
 }

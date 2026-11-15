@@ -169,7 +169,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
   test('1. App load, Character Lab visibility, character switching & reload persistence', async ({ page }) => {
     attachErrorListeners(page);
     await page.setViewportSize({ width: 1440, height: 1520 });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?mode=character-lab', { waitUntil: 'domcontentloaded' });
     await waitForStageReady(page);
 
     const bothTriangles = await readTriangleCount(page);
@@ -217,7 +217,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
     test.setTimeout(150_000);
     attachErrorListeners(page);
     await page.setViewportSize({ width: 1440, height: 1180 });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?mode=character-lab', { waitUntil: 'domcontentloaded' });
     await waitForStageReady(page);
 
     const luluResults: Record<string, { statusUpdated: boolean; changedPixels: number }> = {};
@@ -280,7 +280,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
   test('3. All 8 expressions, Blink, Mouth Open & Lip-Sync captions for Lulu and Nono', async ({ page }) => {
     attachErrorListeners(page);
     await page.setViewportSize({ width: 1440, height: 1180 });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?mode=character-lab', { waitUntil: 'domcontentloaded' });
     await waitForStageReady(page);
 
     await page.getByRole('button', { name: 'لولو', exact: true }).click();
@@ -335,7 +335,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
   test('4. All 9 dual interactions (preserving timed multi-step callbacks from solo mode)', async ({ page }) => {
     attachErrorListeners(page);
     await page.setViewportSize({ width: 1440, height: 1180 });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?mode=character-lab', { waitUntil: 'domcontentloaded' });
     await waitForStageReady(page);
 
     // Start from Lulu solo mode to verify multi-step dual interaction timers survive viewMode switch
@@ -365,7 +365,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
   test('5. Camera presets, 360° orbit drag, lighting presets, controls, pause/resume & resize', async ({ page }) => {
     attachErrorListeners(page);
     await page.setViewportSize({ width: 1440, height: 1180 });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?mode=character-lab', { waitUntil: 'domcontentloaded' });
     await waitForStageReady(page);
 
     // Camera presets
@@ -478,7 +478,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
     });
     const page = await context.newPage();
     attachErrorListeners(page);
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?mode=character-lab', { waitUntil: 'domcontentloaded' });
     await waitForStageReady(page);
 
     await page.getByRole('button', { name: 'لولو', exact: true }).tap();
@@ -511,7 +511,7 @@ test.describe.serial('Phase 1 — Lulu & Nono 3D Character Lab QA Verification',
   test('7. WebGL resource disposal, mount/unmount cycles (3x) & zero runtime errors', async ({ page }) => {
     attachErrorListeners(page);
     await page.setViewportSize({ width: 1440, height: 1180 });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?mode=character-lab', { waitUntil: 'domcontentloaded' });
     await waitForStageReady(page);
 
     const readWebGLMeta = async () =>
