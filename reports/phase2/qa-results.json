@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-11-15T20:50:36.580Z",
+  "environment": "Headless Chromium + ANGLE SwiftShader WebGL2 against production dist/ build",
+  "baseUrl": "http://127.0.0.1:4173",
+  "runtimeErrors": {
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  "summary": {
+    "totalChecks": 1,
+    "passedChecks": 1,
+    "failedChecks": 0
+  },
+  "checks": {
+    "firstRunAndPersistence": {
+      "status": "PASS",
+      "rtlDirection": "rtl",
+      "splashCanvasNonBlankPixels": 10780,
+      "homeCanvasNonBlankPixels": 10781,
+      "profileValidationBlockedShortName": true,
+      "profileRestoredAfterReload": "نور"
+    }
+  },
+  "screenshots": [
+    "reports/phase2/screenshots/01-splash-screen.png",
+    "reports/phase2/screenshots/02-welcome-story.png",
+    "reports/phase2/screenshots/03-create-profile.png",
+    "reports/phase2/screenshots/04-home-dashboard.png",
+    "reports/phase2/screenshots/08-parent-gate.png",
+    "reports/phase2/screenshots/09-parent-dashboard.png"
+  ]
+}

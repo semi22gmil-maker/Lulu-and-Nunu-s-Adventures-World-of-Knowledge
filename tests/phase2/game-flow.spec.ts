@@ -177,7 +177,7 @@ test.describe.serial('Phase 2 — 14 Core Game Screens, Persistence & Guards Ver
 
     // Fill valid Arabic child profile
     await page.locator('#child-nickname-input').fill('نور');
-    await page.getByRole('button', { name: /نونو/ }).click();
+    await page.getByRole('button', { name: /نونو الدب/ }).click();
     await page.getByRole('button', { name: '7', exact: true }).click();
     await page.waitForTimeout(350);
     await capture(page, '03-create-profile.png');
