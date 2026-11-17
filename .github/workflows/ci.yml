@@ -1,0 +1,87 @@
+name: CI Verification
+
+on:
+  push:
+    branches: ["main", "phase/**"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      run_e2e_suite:
+        description: "تشغيل اختبارات Playwright E2E"
+        required: false
+        default: "none"
+        type: choice
+        options:
+          - "none"
+          - "tests/phase1"
+          - "tests/phase2"
+          - "all"
+
+jobs:
+  lint-and-build:
+    name: TypeScript Lint & Production Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript typecheck (npm run lint)
+        run: npm run lint
+
+      - name: Build production bundle (npm run build)
+        run: npm run build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist-bundle
+          path: dist/
+          retention-days: 7
+
+  playwright-e2e:
+    name: Playwright WebGL & Offline E2E (Manual Dispatch)
+    if: github.event_name == 'workflow_dispatch' && inputs.run_e2e_suite != 'none'
+    needs: lint-and-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium & system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E
+        run: |
+          if [ "${{ inputs.run_e2e_suite }}" = "all" ]; then
+            npm run test:e2e
+          else
+            npm run test:e2e -- "${{ inputs.run_e2e_suite }}"
+          fi
+
+      - name: Upload QA reports artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-reports
+          path: reports/
+          retention-days: 14
